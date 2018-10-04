@@ -1,23 +1,4 @@
-import CustomError from "../error/custom-error";
-import { STATUS_CODES } from "../constants";
 import os from "os";
-import Bluebird from "bluebird";
-import request from "request";
-Bluebird.promisifyAll(request);
-
-export const sendRequest = async (params: any) => {
-  const { response, body } = await request(params);
-
-  if (response.statusCode === STATUS_CODES.SUCCESS) {
-    try {
-      return JSON.parse(body as string);
-    } catch (e) {
-      return body;
-    }
-  } else {
-    return new CustomError("Error when executing request", null);
-  }
-};
 
 export const printIp = () => {
   const ifaces = os.networkInterfaces();

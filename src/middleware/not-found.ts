@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-
-export default (message: string) => {
-  return (_: Request, res: Response) => res.status(404).json(message);
-};
+export async function notFoundHandler(ctx) {
+  const msg = `${ctx.request.method} ${ctx.request.path}`;
+  ctx.notFound({
+    message: `No endpoint matched your request: ${msg}`
+  });
+}
