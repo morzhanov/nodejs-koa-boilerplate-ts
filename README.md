@@ -1,7 +1,5 @@
 # NodeJS Koa Boilerplate
 
-# UNDER CONSTRUCTION
-
 <img src="https://i.imgur.com/Z0vXT6v.png"/>
 
 Node.js Koa Boilerplate is an project that allows you to start new node.js project from scratch.
@@ -23,33 +21,31 @@ This boilerplate contains such folders:
 * <b>/src/constants </b> - app constants.
 * <b>/src/controllers </b> - contain controllers that receives requests from routes, executes business logic via services and returns responses to client. 
 * <b>/src/db </b> - contain scripts to setup and manage database
-* <b>/src/error </b> - custom errors
 * <b>/src/middleware </b> - app middlewares
-* <b>/src/models </b> - database models (schemas)
-* <b>/src/routes </b> - configure here youre app's routes
+* <b>/src/entities </b> - database entities
 * <b>/src/services </b> - services contains logic to manage database, execute requests to other servers, change application behabior, and etc.
+* <b>/src/app.ts </b> - app configuration
 * <b>/src/index.ts </b> - contain main scripts that configures and run server
-
 * <b>/test </b> - contains tests for controllers, services and other parts of application.
 
 ## NPM Scripts
 
-* start - run node.js server (HTTPS)
-* http - run node.js server (HTTP)
-* test - test server with Mocha
-* lint - run eslint check
-* forever - add /src/bin/www.js script to forever scripts and run
+* start - run node.js server
+* serve - run builded files
+* build - build project
 
 ## Main Technologies and libraries
 
 - <a href="https://nodejs.org/en/">NodeJS</a>
 - <a href="https://koajs.com/#">KoaJS</a>
 - <a href="https://www.typescriptlang.org/">Typescript</a>
-- <a href="https://jwt.io/">JWT</a>
-- <a href="https://github.com/helmetjs/helmet">Helmet</a>
-- <a href="https://github.com/request/request">Request</a>
-- <a href="https://mochajs.org/">Mocha</a>
-- <a href="https://github.com/visionmedia/supertest">Supertest</a>
+- <a href="https://github.com/auth0/node-jsonwebtoken">jsonwebtoken</a>
+- <a href="https://github.com/typeorm/typeorm">typeorm</a>
+- <a href="https://github.com/jeffijoe/awilix">awilix</a>
+- <a href="https://github.com/jeffijoe/awilix-koa">awilix-koa</a>
+- <a href="https://github.com/koajs/bodyparser">koa-bodyparser</a>
+- <a href="https://github.com/varunpal/koa-cookie">koa-cookie</a>
+- <a href="https://github.com/alexmingoia/koa-router">koa-router</a>
 
 ## Contributing
 
