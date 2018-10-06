@@ -3,10 +3,12 @@ import { createController } from "awilix-koa";
 import AuthService from "../services/auth.service";
 
 const authController = (authService: AuthService) => ({
-  login: async (ctx: Context, next: Function) => {
+  login: async (ctx: Context) => {
     const {
-      headers: { email, password }
-    } = ctx;
+      request: {
+        body: { email, password }
+      }
+    } = ctx as any;
 
     const token = await authService.login(email, password);
 
@@ -17,10 +19,12 @@ const authController = (authService: AuthService) => ({
     ctx.body = token;
   },
 
-  signup: async (ctx: Context, next: Function) => {
+  signup: async (ctx: Context) => {
     const {
-      headers: { email, password }
-    } = ctx;
+      request: {
+        body: { email, password }
+      }
+    } = ctx as any;
 
     let user = await authService.getUserByEmail(email);
 

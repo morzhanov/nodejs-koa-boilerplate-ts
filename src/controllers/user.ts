@@ -3,10 +3,12 @@ import { createController } from "awilix-koa";
 import UserService from "../services/user.service";
 
 const userController = (userService: UserService) => ({
-  getUser: async (ctx: Context, next: Function) => {
+  getUser: async (ctx: Context) => {
     let {
-      body: { userId }
-    } = ctx;
+      request: {
+        body: { userId }
+      }
+    } = ctx as any;
 
     const user = await userService.getUser(userId);
 
@@ -19,10 +21,12 @@ const userController = (userService: UserService) => ({
     ctx.body = user;
   },
 
-  updateUser: async (ctx: Context, next: Function) => {
+  updateUser: async (ctx: Context) => {
     const {
-      body: { userData, userId }
-    } = ctx;
+      request: {
+        body: { userData, userId }
+      }
+    } = ctx as any;
 
     if (!userData) {
       ctx.throw(403, "Data not provided");
@@ -33,8 +37,10 @@ const userController = (userService: UserService) => ({
 
   deleteUser: async (ctx: Context) => {
     const {
-      body: { userId }
-    } = ctx;
+      request: {
+        body: { userId }
+      }
+    } = ctx as any;
 
     await userService.deleteUser(userId);
   }
