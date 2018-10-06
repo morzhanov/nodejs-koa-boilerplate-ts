@@ -4,6 +4,7 @@ import cors from "@koa/cors";
 import bodyParser from "koa-bodyparser";
 import compress from "koa-compress";
 import { scopePerRequest, loadControllers } from "awilix-koa";
+import { requestLogger } from "./middleware/request-logger";
 import { notFoundHandler } from "./middleware/not-found";
 import { errorHandler } from "./middleware/error-handler";
 
@@ -14,11 +15,12 @@ export const createApp = (container: any) => {
 
   app
     .use(errorHandler)
+    .use(requestLogger)
     .use(compress())
     .use(cors())
     .use(bodyParser())
     .use(scopePerRequest(container))
-    .use(loadControllers("./controllers/*.js", { cwd: __dirname }))
+    .use(loadControllers("./controllers/*.ts", { cwd: __dirname }))
     .use(notFoundHandler);
 
   logger.info("Koa application created!");

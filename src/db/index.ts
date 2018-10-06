@@ -1,4 +1,5 @@
 import { createConnection } from "typeorm";
+import { logger } from "../utils/logger";
 import { User } from "../entities/user.entity";
 
 export const createDatabaseConnection = async () => {
@@ -9,6 +10,9 @@ export const createDatabaseConnection = async () => {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
   };
+
+  logger.info("Connecting to database ...");
+  logger.info("Database connection configuration: ", config);
 
   return await createConnection({
     type: "postgres",

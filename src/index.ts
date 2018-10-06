@@ -7,6 +7,8 @@ import { configureContainer } from "./di/container";
 import { printIp } from "./utils/helpers";
 
 createDatabaseConnection().then(connection => {
+  logger.info("Connected to database!");
+
   const container = configureContainer(connection);
   const app = createApp(container);
 

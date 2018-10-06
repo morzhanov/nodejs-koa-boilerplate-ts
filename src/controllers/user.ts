@@ -11,9 +11,7 @@ const userController = (userService: UserService) => ({
     const user = await userService.getUser(userId);
 
     if (!user) {
-      ctx.status = 404;
-      ctx.message = "Data not found";
-      return next();
+      ctx.throw(404, "Data not found");
     }
 
     user.password = undefined;
@@ -27,9 +25,7 @@ const userController = (userService: UserService) => ({
     } = ctx;
 
     if (!userData) {
-      ctx.status = 403;
-      ctx.message = "Data not provided";
-      return next();
+      ctx.throw(403, "Data not provided");
     }
 
     await userService.updateUser(userId, userData);
@@ -45,7 +41,7 @@ const userController = (userService: UserService) => ({
 });
 
 export default createController(userController)
-  .prefix("/user")
+  .prefix("/api/user")
   .get("", "getUser")
   .put("", "updateUser")
   .delete("", "deleteUser");

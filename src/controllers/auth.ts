@@ -5,15 +5,13 @@ import AuthService from "../services/auth.service";
 const authController = (authService: AuthService) => ({
   login: async (ctx: Context, next: Function) => {
     const {
-      body: { email, password }
+      headers: { email, password }
     } = ctx;
 
-    const token = authService.login(email, password);
+    const token = await authService.login(email, password);
 
     if (!token) {
-      ctx.status = 403;
-      ctx.message = "Invalid credentials";
-      return next();
+      ctx.throw(403, "Invalid credentials");
     }
 
     ctx.body = token;
@@ -21,15 +19,13 @@ const authController = (authService: AuthService) => ({
 
   signup: async (ctx: Context, next: Function) => {
     const {
-      body: { email, password }
+      headers: { email, password }
     } = ctx;
 
     let user = await authService.getUserByEmail(email);
 
     if (user) {
-      ctx.status = 403;
-      ctx.message = "User already exists";
-      return next();
+      ctx.throw(403, "User already exists");
     }
 
     ctx.body = await authService.signup(email, password);
@@ -37,6 +33,6 @@ const authController = (authService: AuthService) => ({
 });
 
 export default createController(authController)
-  .prefix("/")
-  .get("/login", "login")
-  .put("/signup", "signup");
+  .prefix("/api")
+  .post("/login", "login")
+  .post("/signup", "signup");
