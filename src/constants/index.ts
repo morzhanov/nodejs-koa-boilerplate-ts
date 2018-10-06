@@ -10,3 +10,4 @@ export const POSTGRES_USERNAME = process.env.POSTGRES_USERNAME;
 export const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD;
 export const POSTGRES_DATABASE_NAME = process.env.POSTGRES_DATABASE_NAME;
 export const SECRET = process.env.SECRET;
+export const ACCESS_TOKEN_EXPIRES = process.env.ACCESS_TOKEN_EXPIRES || "24h";

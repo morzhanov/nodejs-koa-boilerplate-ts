@@ -15,7 +15,8 @@
       "check-operator",
       "check-module",
       "check-separator",
-      "check-type"
+      "check-type",
+      "check-preblock"
     ],
     "typedef-whitespace": [
       true,

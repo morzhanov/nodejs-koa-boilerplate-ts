@@ -1,9 +1,10 @@
 import { createContainer, Lifetime, InjectionMode, asValue } from "awilix";
 import { logger } from "../utils/logger";
+import { Connection } from "typeorm";
 
-const modulesToLoad = [["services/*.js", Lifetime.SCOPED]];
+const modulesToLoad = ["services/*.js", Lifetime.SCOPED];
 
-export function configureContainer() {
+export const configureContainer = (databaseConnection: Connection) => {
   const opts = {
     injectionMode: InjectionMode.CLASSIC
   };
@@ -13,6 +14,7 @@ export function configureContainer() {
       formatName: "camelCase"
     })
     .register({
-      logger: asValue(logger)
+      logger: asValue(logger),
+      databaseConnection: asValue(databaseConnection)
     });
-}
+};

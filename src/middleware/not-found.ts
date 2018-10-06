@@ -1,6 +1,7 @@
-export async function notFoundHandler(ctx) {
+import { Context } from "koa";
+
+export const notFoundHandler = async (ctx: Context) => {
   const msg = `${ctx.request.method} ${ctx.request.path}`;
-  ctx.notFound({
-    message: `No endpoint matched your request: ${msg}`
-  });
-}
+  ctx.status = 404;
+  ctx.message = `Not found: ${msg}`;
+};

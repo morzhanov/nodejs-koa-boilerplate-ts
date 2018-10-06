@@ -1,63 +1,51 @@
-import { Response, Request } from "express";
-import UserService from "../services/user-service";
-import { STATUS_CODES, ERROR_CODES } from "../constants";
-import CustomError from "../error/custom-error";
-import User from "../models/User";
+import { Context } from "koa";
+import { createController } from "awilix-koa";
+import UserService from "../services/user.service";
 
-export default {
-  retrieve: async ({ user }: { user: any }, res: Response, next: Function) => {
-    try {
-      user = await UserService.getUser(user.id);
-    } catch (e) {
-      return next(e);
-    }
+const userController = (userService: UserService) => ({
+  getUser: async (ctx: Context, next: Function) => {
+    let {
+      body: { userId }
+    } = ctx;
+
+    const user = await userService.getUser(userId);
 
     if (!user) {
-      return next(
-        new CustomError("Data not found", ERROR_CODES.DATA_NOT_FOUND)
-      );
+      ctx.status = 404;
+      ctx.message = "Data not found";
+      return next();
     }
 
     user.password = undefined;
 
-    res.status(STATUS_CODES.SUCCESS).json(user);
+    ctx.body = user;
   },
 
-  update: async (
-    { user, body }: { user: any; body: any },
-    res: Response,
-    next: Function
-  ) => {
-    if (!body.userData) {
-      return next(
-        new CustomError("Data not provided", ERROR_CODES.DATA_NOT_PROVIDED)
-      );
+  updateUser: async (ctx: Context, next: Function) => {
+    const {
+      body: { userData, userId }
+    } = ctx;
+
+    if (!userData) {
+      ctx.status = 403;
+      ctx.message = "Data not provided";
+      return next();
     }
 
-    try {
-      user = await UserService.editUser(user.id, body.userData);
-    } catch (e) {
-      return next(e);
-    }
-
-    if (!user) {
-      return next(
-        new CustomError("Data not found", ERROR_CODES.DATA_NOT_FOUND)
-      );
-    }
-
-    user.password = undefined;
-
-    res.status(STATUS_CODES.SUCCESS).json(user);
+    await userService.updateUser(userId, userData);
   },
 
-  delete: async ({ user }: { user: any }, res: Response, next: Function) => {
-    try {
-      await UserService.deleteUser(user.id);
-    } catch (e) {
-      return next(e);
-    }
+  deleteUser: async (ctx: Context) => {
+    const {
+      body: { userId }
+    } = ctx;
 
-    res.status(STATUS_CODES.SUCCESS).send();
+    await userService.deleteUser(userId);
   }
-};
+});
+
+export default createController(userController)
+  .prefix("/user")
+  .get("", "getUser")
+  .put("", "updateUser")
+  .delete("", "deleteUser");

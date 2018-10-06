@@ -1,34 +1,25 @@
 import * as http from "http";
-import Koa from "koa";
-import cors from "@koa/cors";
-import bodyParser from "koa-bodyparser";
-import compress from "koa-compress";
+import { createDatabaseConnection } from "./db";
+import { createApp } from "./app";
 import { PORT, NODE_ENV } from "./constants";
-import { scopePerRequest, loadControllers } from "awilix-koa";
 import { logger } from "./utils/logger";
 import { configureContainer } from "./di/container";
-import { notFoundHandler } from "./middleware/not-found";
-import { errorHandler } from "./middleware/error-handler";
+import { printIp } from "./utils/helpers";
 
-const app = new Koa();
+createDatabaseConnection().then(connection => {
+  const container = configureContainer(connection);
+  const app = createApp(container);
 
-app
-  .use(errorHandler)
-  .use(compress())
-  .use(cors())
-  .use(bodyParser())
-  .use(scopePerRequest(configureContainer()))
-  .use(loadControllers("../routes/*.js", { cwd: __dirname }))
-  .use(notFoundHandler);
+  const server = http.createServer(app.callback());
 
-const server = http.createServer(app.callback());
+  server.on("close", () => {
+    logger.info("Server closing, bye!");
+  });
 
-server.on("close", () => {
-  logger.info("Server closing, bye!");
+  logger.info("Server created, ready to listen", { scope: "startup" });
+
+  app.listen(PORT, () => {
+    logger.info(`Server listening on ${PORT} in ${NODE_ENV} mode`);
+    printIp();
+  });
 });
-
-logger.info("Server created, ready to listen", { scope: "startup" });
-
-app.listen(PORT, () =>
-  logger.info(`Server listening on ${PORT} in ${NODE_ENV} mode`)
-);

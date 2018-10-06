@@ -1,8 +1,8 @@
 import os from "os";
+import { logger } from "./logger";
 
 export const printIp = () => {
   const ifaces = os.networkInterfaces();
-
   Object.keys(ifaces).forEach(ifname => {
     let alias = 0;
     ifaces[ifname].forEach(iface => {
@@ -10,9 +10,9 @@ export const printIp = () => {
         return;
       }
       if (alias >= 1) {
-        console.log(ifname + ":" + alias, iface.address);
+        logger.info(ifname + ":" + alias, iface.address);
       } else {
-        console.log(ifname, iface.address);
+        logger.info(ifname, iface.address);
       }
       ++alias;
     });
