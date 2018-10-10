@@ -22,9 +22,6 @@ export const jwtCheck = async (ctx: Context) => {
         error: "Failed to authenticate token."
       });
     } else {
-      // TODO: do something with user in context
-      // maybe we should pass it in some other way
-      // maybe this: https://stackoverflow.com/questions/43160598/adding-properties-to-koa2s-context-in-typescript
       ctx.body.userId = decoded.id;
     }
   });
