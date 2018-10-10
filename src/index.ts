@@ -4,7 +4,6 @@ import { createApp } from "./app";
 import { PORT, NODE_ENV } from "./constants";
 import { logger } from "./utils/logger";
 import { configureContainer } from "./di/container";
-import { printIp } from "./utils/helpers";
 
 createDatabaseConnection().then(connection => {
   logger.info("Connected to database!");
@@ -22,6 +21,5 @@ createDatabaseConnection().then(connection => {
 
   app.listen(PORT, () => {
     logger.info(`Server listening on ${PORT} in ${NODE_ENV} mode`);
-    printIp();
   });
 });
