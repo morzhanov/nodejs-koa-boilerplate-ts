@@ -1,8 +1,10 @@
-# NodeJS Koa Boilerplate
+# NodeJS Koa Boilerplate (TypeScript)
 
-<img src="https://i.imgur.com/Z0vXT6v.png"/>
+<img src="https://i.imgur.com/FQHJZGX.png"/>
 
 Node.js Koa Boilerplate is an project that allows you to start new node.js project from scratch.
+
+This project uses TypeScript. You can review <a href="https://github.com/VladMorzhanov/nodejs-koa-boilerplate-flow">Flow</a> and <a href="https://github.com/VladMorzhanov/nodejs-koa-boilerplate">Javascript</a> versions.
 
 ## Installation
 
