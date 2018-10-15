@@ -1,8 +1,8 @@
 t{
-  "name": "nodejs-koa-boilerplate",
-  "version": "1.0.0",
-  "description": "NodeJS Koa Boilerplate",
-  "main": "./src/bin/www.js",
+  "name": "nodejs-koa-boilerplate-ts",
+  "version": "1.1.0",
+  "description": "NodeJS Koa Boilerplate (Typescript)",
+  "main": "./src/index.js",
   "author": "Vlad Morzhanov",
   "license": "MIT",
   "scripts": {
@@ -51,10 +51,5 @@ t{
     "nodemon": "^1.18.4",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/VladMorzhanov/nodejs-boilerplate.git"
-  },
-  "homepage": "https://github.com/VladMorzhanov/nodejs-boilerplate#readme"
+  }
 }
